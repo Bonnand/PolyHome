@@ -1,10 +1,14 @@
-package com.example.androidtp2
+package com.adrien_bonnand.polyhome
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import com.adrien_bonnand.polyhome.R
+import com.google.android.gms.common.api.Api
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,30 +24,42 @@ class LoginActivity : AppCompatActivity() {
 
     public fun auth(view: View){
 
-        val mailText = findViewById<EditText>(R.id.txtMail);
+        val loginText = findViewById<EditText>(R.id.txtLogin);
         val passwordText = findViewById<EditText>(R.id.txtPassword);
 
 
         val loginData =
             LoginData(
-                mail = mailText.text.toString(),
+                login = loginText.text.toString(),
                 password = passwordText.text.toString());
 
-        Api().post<LoginData,String>("https://mypizza.lesmoulinsdudev.com/auth", loginData, ::loginSuccess)
+        Api().post<LoginData,String>("https://polyhome.lesmoulinsdudev.com/api/users/auth", loginData, ::loginSuccess)
     }
 
 
     private fun loginSuccess (responseCode : Int, token : String?){
         if(responseCode==200){
             //finish()
-            val intentLeave = Intent(
-                this,
-                OrdersActivity::class.java
-            )
+            //val intentLeave = Intent(
+            //    this,
+            //    OrdersActivity::class.java
+            //)
 
-            intentLeave.putExtra("token",token)
-
-            startActivity(intentLeave);
+            //intentLeave.putExtra("token",token)
+            showErrorPopup(this, "login sucess.")
+            //startActivity(intentLeave);
         }
+    }
+
+    private fun showErrorPopup(context: Context, errorMessage: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Erreur")
+        builder.setMessage(errorMessage)
+        builder.setIcon(android.R.drawable.ic_dialog_alert) // Icône d'alerte
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss() // Fermer le pop-up
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }

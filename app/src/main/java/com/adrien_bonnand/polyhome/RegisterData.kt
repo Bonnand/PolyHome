@@ -1,4 +1,4 @@
-package com.example.androidtp2
+package com.adrien_bonnand.polyhome
 
 import android.widget.Button
 import android.widget.EditText

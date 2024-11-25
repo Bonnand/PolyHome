@@ -14,8 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pizza" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -33,22 +32,22 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Pizza !"
+            android:text="Authentification"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="34sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/txtMail"
+            android:id="@+id/txtLogin"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="Adresse mail"
-            android:inputType="textEmailAddress"
+            android:hint="Login"
+            android:inputType="text"
             android:paddingLeft="5dp"
             android:paddingTop="10dp"
             android:paddingRight="5dp"
