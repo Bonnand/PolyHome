@@ -42,14 +42,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginSuccess (responseCode : Int, tokenData : TokenData?){
         if(responseCode==200 && tokenData!=null){
-            finish()
             val intentLeave = Intent(
                 this,
-                RegisterActivity::class.java
+                HousesListActivity::class.java
             )
 
             intentLeave.putExtra("token",tokenData.token)
-            showErrorPopup(this, "login success.")
             startActivity(intentLeave);
         }
         else if(responseCode==400){
@@ -76,17 +74,5 @@ class LoginActivity : AppCompatActivity() {
                 }
             }.start()
         }
-    }
-
-    private fun showErrorPopup(context: Context, errorMessage: String) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Erreur")
-        builder.setMessage(errorMessage)
-        builder.setIcon(android.R.drawable.ic_dialog_alert) // Icône d'alerte
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss() // Fermer le pop-up
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 }
