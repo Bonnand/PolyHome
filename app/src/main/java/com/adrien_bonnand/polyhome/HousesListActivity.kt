@@ -73,12 +73,12 @@ class HousesListActivity : AppCompatActivity() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val rowView = inflater.inflate(R.layout.show_houses, parent, false)
             val house = getItem(position)
-
             val houseIdText = rowView.findViewById<TextView>(R.id.textHouseId)
             val ownerText = rowView.findViewById<TextView>(R.id.textOwner)
 
+
+            ownerText.text = if(house.owner) "Propriétaire" else "Membre"
             houseIdText.text = house.houseId.toString()
-            ownerText.text = house.owner.toString()
 
             return rowView
         }
