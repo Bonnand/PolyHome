@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
                 login = loginText.text.toString(),
                 password = passwordText.text.toString());
 
-
         Api().post<LoginData,TokenData>("https://polyhome.lesmoulinsdudev.com/api/users/auth", loginData, ::loginSuccess)
 
     }
