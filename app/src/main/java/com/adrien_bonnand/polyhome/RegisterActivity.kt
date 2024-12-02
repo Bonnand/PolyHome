@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.google.android.gms.common.api.Api
 
 class RegisterActivity : AppCompatActivity() {
@@ -37,14 +38,32 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerSuccess(responseCode : Int){
         if(responseCode==200){
-            //finish()
-            //val intentLeave = Intent(
-            //   this,
-            //    LoginActivity::class.java
-           //)
-
-           //startActivity(intentLeave);
             finish()
+        }
+
+        else if(responseCode==400){
+            val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            Thread {
+                runOnUiThread {
+                    registerMessage.text="Les données fournies sont incorrectes"
+                }
+            }.start()
+        }
+        else if(responseCode==409){
+            val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            Thread {
+                runOnUiThread {
+                    registerMessage.text="Le login est déjà utilisé par un autre compte"
+                }
+            }.start()
+        }
+        else if(responseCode==500){
+            val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            Thread {
+                runOnUiThread {
+                    registerMessage.text="Une erreur s’est produite au niveau du serveur"
+                }
+            }.start()
         }
     }
 }
