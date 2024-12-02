@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.adrien_bonnand.polyhome.R
 import com.google.android.gms.common.api.Api
@@ -33,21 +34,47 @@ class LoginActivity : AppCompatActivity() {
                 login = loginText.text.toString(),
                 password = passwordText.text.toString());
 
-        Api().post<LoginData,String>("https://polyhome.lesmoulinsdudev.com/api/users/auth", loginData, ::loginSuccess)
+
+        Api().post<LoginData,TokenData>("https://polyhome.lesmoulinsdudev.com/api/users/auth", loginData, ::loginSuccess)
+
     }
 
 
-    private fun loginSuccess (responseCode : Int, token : String?){
-        if(responseCode==200){
-            //finish()
-            //val intentLeave = Intent(
-            //    this,
-            //    OrdersActivity::class.java
-            //)
+    private fun loginSuccess (responseCode : Int, tokenData : TokenData?){
+        if(responseCode==200 && tokenData!=null){
+            finish()
+            val intentLeave = Intent(
+                this,
+                RegisterActivity::class.java
+            )
 
-            //intentLeave.putExtra("token",token)
-            showErrorPopup(this, "login sucess.")
-            //startActivity(intentLeave);
+            intentLeave.putExtra("token",tokenData.token)
+            showErrorPopup(this, "login success.")
+            startActivity(intentLeave);
+        }
+        else if(responseCode==400){
+            val loginMessage = findViewById<TextView>(R.id.loginMessage);
+            Thread {
+                runOnUiThread {
+                    loginMessage.text="Les données fournies sont incorrectes"
+                }
+            }.start()
+        }
+        else if(responseCode==401){
+            val loginMessage = findViewById<TextView>(R.id.loginMessage);
+            Thread {
+                runOnUiThread {
+                    loginMessage.text="Aucun utilisateur ne correspond aux identifiants donnés"
+                }
+            }.start()
+        }
+        else if(responseCode==500){
+            val loginMessage = findViewById<TextView>(R.id.loginMessage);
+            Thread {
+                runOnUiThread {
+                    loginMessage.text="Une erreur s’est produite au niveau du serveur"
+                }
+            }.start()
         }
     }
 
