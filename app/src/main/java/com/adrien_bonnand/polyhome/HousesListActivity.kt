@@ -1,11 +1,14 @@
 package com.adrien_bonnand.polyhome
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.BaseAdapter
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -39,7 +42,12 @@ class HousesListActivity : AppCompatActivity() {
         if (responseCode == 200 && loadedHouses != null) {
             houses.clear()
             houses.addAll(loadedHouses)
-            runOnUiThread { housesAdapter.notifyDataSetChanged() }
+            runOnUiThread {
+                housesAdapter.notifyDataSetChanged()
+                val idHouse = findViewById<TextView>(R.id.idHouse)
+                idHouse.text="Identifiant de la maison : " + houses[0].houseId.toString();
+            }
+
         }
     }
 
@@ -70,17 +78,105 @@ class HousesListActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rowView = inflater.inflate(R.layout.show_houses, parent, false)
             val house = getItem(position)
+
+            if (house.owner) {
+                val emptyView = View(context)
+                emptyView.layoutParams = AbsListView.LayoutParams(0, 0)
+                return emptyView
+            }
+
+            val rowView = inflater.inflate(R.layout.show_houses, parent, false)
             val houseIdText = rowView.findViewById<TextView>(R.id.textHouseId)
             val ownerText = rowView.findViewById<TextView>(R.id.textOwner)
 
-
-            ownerText.text = if(house.owner) "Propriétaire" else "Membre"
+            ownerText.text = "Membre"
             houseIdText.text = house.houseId.toString()
 
             return rowView
         }
     }
 
+    public fun addGuest(view: View)
+    {
+        val loginChoiced = findViewById<EditText>(R.id.loginChoiced);
+        val userLogin= loginChoiced.text.toString();
+        val guestData = GuestData(userLogin=userLogin);
+
+        Api().post<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::addGuestSuccess ,token)
+    }
+
+    public fun deleteGuest(view: View)
+    {
+        val loginChoiced = findViewById<EditText>(R.id.loginChoiced);
+        val userLogin= loginChoiced.text.toString();
+        val guestData = GuestData(userLogin=userLogin);
+
+        Api().delete<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::deleteGuestSuccess ,token)
+    }
+
+    private fun addGuestSuccess (responseCode : Int) {
+        if (responseCode == 200) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Invité ajouté"
+                }
+            }.start()
+        } else if (responseCode == 400) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Les données fournies sont incorrectes"
+                }
+            }.start()
+        } else if (responseCode == 403) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text ="Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)"
+                }
+            }.start()
+        } else if (responseCode == 500) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Une erreur s’est produite au niveau du serveur"
+                }
+            }.start()
+        }
+    }
+
+
+    private fun deleteGuestSuccess (responseCode : Int) {
+        if (responseCode == 200) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Invité supprimé"
+                }
+            }.start()
+        } else if (responseCode == 400) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Les données fournies sont incorrectes"
+                }
+            }.start()
+        } else if (responseCode == 403) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text ="Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)"
+                }
+            }.start()
+        } else if (responseCode == 500) {
+            val guestMessage = findViewById<TextView>(R.id.guestMessage);
+            Thread {
+                runOnUiThread {
+                    guestMessage.text = "Une erreur s’est produite au niveau du serveur"
+                }
+            }.start()
+        }
+    }
 }
