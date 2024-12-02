@@ -16,12 +16,12 @@ class HousesListActivity : AppCompatActivity() {
     private lateinit var housesAdapter: HouseAdapter
 
 
-    //private var token: String? = null
+    private var token: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_houses_list)
-        //token=intent.getStringExtra("token")
+        token=intent.getStringExtra("token")
         initHousesListView()
         loadHouses()
     }
@@ -32,7 +32,6 @@ class HousesListActivity : AppCompatActivity() {
     }
 
     public fun loadHouses() {
-        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMjkyODJ9.8FiSeU1RZARRSDI7HZ4DXvcUnqN6JBKm0BFaWU7SzpM"
         Api().get<ArrayList<House>>("https://polyhome.lesmoulinsdudev.com/api/houses", ::loadHousesSuccess,token)
     }
 
