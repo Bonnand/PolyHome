@@ -18,21 +18,22 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="516dp"
         android:background="#88000000"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2">
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.613">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/loginMessage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Authentification"
+            android:layout_height="142dp"
+            android:text="Rentrez vos identifiants"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="34sp"
@@ -91,5 +92,16 @@
             android:onClick="registerNewAccount"
             android:text="Créer un compte" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="336dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Authentification"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
