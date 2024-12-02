@@ -38,12 +38,13 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerSuccess(responseCode : Int){
         if(responseCode==200){
             //finish()
-            val intentLeave = Intent(
-               this,
-                LoginActivity::class.java
-           )
+            //val intentLeave = Intent(
+            //   this,
+            //    LoginActivity::class.java
+           //)
 
-           startActivity(intentLeave);
+           //startActivity(intentLeave);
+            finish()
         }
     }
 }
