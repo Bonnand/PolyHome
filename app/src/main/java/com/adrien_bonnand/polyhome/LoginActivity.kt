@@ -39,15 +39,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginSuccess (responseCode : Int, token : String?){
         if(responseCode==200){
-            //finish()
-            //val intentLeave = Intent(
-            //    this,
-            //    OrdersActivity::class.java
-            //)
+            val intentLeave = Intent(
+                this,
+                HousesListActivity::class.java
+            )
 
-            //intentLeave.putExtra("token",token)
+            intentLeave.putExtra("token",token)
             showErrorPopup(this, "login sucess.")
-            //startActivity(intentLeave);
+            startActivity(intentLeave);
         }
     }
 
