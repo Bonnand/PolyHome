@@ -37,7 +37,7 @@ class DevicesListActivity : AppCompatActivity() {
     }
 
     public fun loadDevices() {
-        val houseId = 81
+        val houseId = 81 //à supprimer ensuite
         val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMzU4OTZ9.gO66kzH_4wPfoHlP-102UBFC8KSqcrrPM787YA6wR4Y"
         Api().get<Devices>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices", ::loadDevicesSuccess,token)
     }
@@ -83,8 +83,16 @@ class DevicesListActivity : AppCompatActivity() {
             val deviceIdText = rowView.findViewById<TextView>(R.id.textDeviceId)
             val deviceStateText = rowView.findViewById<TextView>(R.id.textDeviceState)
 
-            deviceStateText.text = if(device.openingMode == 1) "Fermé" else "Ouvert"
-            deviceIdText.text = device.deviceId
+            deviceIdText.text = device.id
+
+            if (device.type == "light") {
+                deviceStateText.text = if (device.power == 1) "Allumé" else "Éteint"
+            } else {
+                deviceStateText.text = if (device.opening == 1) "Fermé" else "Ouvert"
+            }
+
+
+
 
             return rowView
         }
