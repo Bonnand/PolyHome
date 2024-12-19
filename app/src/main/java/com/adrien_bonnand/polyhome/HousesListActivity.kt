@@ -17,9 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 class HousesListActivity : AppCompatActivity() {
     private val houses: ArrayList<House> = ArrayList()
     private lateinit var housesAdapter: HouseAdapter
-
-
     private var token: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

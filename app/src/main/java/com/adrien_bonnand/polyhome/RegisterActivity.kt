@@ -34,8 +34,6 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun registerSuccess(responseCode : Int){
         if(responseCode==200){
             finish()
