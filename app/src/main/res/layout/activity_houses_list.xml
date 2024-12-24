@@ -36,32 +36,32 @@
             android:layout_height="wrap_content"
             android:text="Identifiant maison :" />
 
-        <EditText
-            android:id="@+id/loginChoiced"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:text="Choisir un utilisateur" />
 
-        <TextView
-            android:id="@+id/guestMessage"
+        <Spinner
+            android:id="@+id/lstUsers"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:listitem="@android:layout/simple_spinner_item" />
+
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="addGuest"
-            android:text="Ajout d'un invité" />
+            android:text="Ajouter cet invité" />
 
         <Button
             android:id="@+id/delButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="deleteGuest"
-            android:text="Suppression d'un invité" />
+            android:text="Supprimer cet invité" />
 
     </LinearLayout>
 
