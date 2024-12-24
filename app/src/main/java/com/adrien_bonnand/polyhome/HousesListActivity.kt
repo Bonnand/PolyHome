@@ -7,16 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class HousesListActivity : AppCompatActivity() {
     private val houses: ArrayList<House> = ArrayList()
+    private val users: ArrayList<String> = ArrayList()
     private lateinit var housesAdapter: HouseAdapter
+    private var selectedUser: String = "defaultUser"
     private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +32,42 @@ class HousesListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_houses_list)
         token=intent.getStringExtra("token")
         initHousesListView()
+        loadUsers()
         loadHouses()
     }
 
     override fun onResume() {
         super.onResume()
         loadHouses()
+    }
+
+    public fun loadUsers() {
+        Api().get<ArrayList<UserData>>("https://polyhome.lesmoulinsdudev.com/api/users", ::loadUsersSuccess)
+    }
+
+    public fun loadUsersSuccess(responseCode: Int, loadedUsers: ArrayList<UserData>?) {
+        if (responseCode == 200 && loadedUsers!=null) {
+            users.clear()
+            users.addAll(loadedUsers.map { it.login })
+                val usersView = findViewById<Spinner>(R.id.lstUsers)
+            runOnUiThread {
+                usersView.adapter =
+                    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, users)
+                usersView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        selectedUser = users[position]
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                }
+            }
+        }
     }
 
     public fun loadHouses() {
@@ -98,49 +135,45 @@ class HousesListActivity : AppCompatActivity() {
 
     public fun addGuest(view: View)
     {
-        val loginChoiced = findViewById<EditText>(R.id.loginChoiced);
-        val userLogin= loginChoiced.text.toString();
-        val guestData = GuestData(userLogin=userLogin);
+        //il faut changer le layout
+        //creer branch modification
+        //et tout
+
+        val guestData = GuestData(userLogin=selectedUser);
 
         Api().post<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::addGuestSuccess ,token)
     }
 
     public fun deleteGuest(view: View)
     {
-        val loginChoiced = findViewById<EditText>(R.id.loginChoiced);
-        val userLogin= loginChoiced.text.toString();
-        val guestData = GuestData(userLogin=userLogin);
+        val guestData = GuestData(userLogin=selectedUser);
 
         Api().delete<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::deleteGuestSuccess ,token)
     }
 
     private fun addGuestSuccess (responseCode : Int) {
         if (responseCode == 200) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Invité ajouté"
+                    Toast.makeText(this, "Invité ajouté", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 400) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Les données fournies sont incorrectes"
+                    Toast.makeText(this, "Les données fournies sont incorrectes", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 403) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text ="Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)"
+                    Toast.makeText(this, "Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 500) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Une erreur s’est produite au niveau du serveur"
+                    Toast.makeText(this, "Une erreur s’est produite au niveau du serveur", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         }
@@ -149,31 +182,27 @@ class HousesListActivity : AppCompatActivity() {
 
     private fun deleteGuestSuccess (responseCode : Int) {
         if (responseCode == 200) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Invité supprimé"
+                    Toast.makeText(this, "Invité supprimé", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 400) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Les données fournies sont incorrectes"
+                    Toast.makeText(this, "Les données fournies sont incorrectes", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 403) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text ="Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)"
+                    Toast.makeText(this, "Accès interdit (token invalide ou ne correspondant pas au propriétaire de la maison)", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         } else if (responseCode == 500) {
-            val guestMessage = findViewById<TextView>(R.id.guestMessage);
             Thread {
                 runOnUiThread {
-                    guestMessage.text = "Une erreur s’est produite au niveau du serveur"
+                    Toast.makeText(this, "Une erreur s’est produite au niveau du serveur", Toast.LENGTH_SHORT).show()
                 }
             }.start()
         }
