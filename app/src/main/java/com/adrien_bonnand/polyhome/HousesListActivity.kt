@@ -24,9 +24,8 @@ class HousesListActivity : AppCompatActivity() {
     private val users: ArrayList<String> = ArrayList()
     private lateinit var housesAdapter: HouseAdapter
     private var selectedUser: String = "defaultUser"
-
-
     private var token: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
