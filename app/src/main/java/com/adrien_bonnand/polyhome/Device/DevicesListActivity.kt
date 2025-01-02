@@ -91,9 +91,6 @@ class DevicesListActivity : AppCompatActivity() {
                 deviceStateText.text = if (device.opening == 1) "Fermé" else "Ouvert"
             }
 
-
-
-
             return rowView
         }
     }

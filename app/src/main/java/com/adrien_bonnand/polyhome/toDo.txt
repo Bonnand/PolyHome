@@ -1,4 +1,0 @@
-add toast everywhere
-layout more esthetic
-see users of a house
-see users of our house

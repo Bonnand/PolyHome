@@ -4,74 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HousesListActivity">
+    android:background="#ADD8E6"
+    tools:context=".House.HousesListActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="391dp"
-        android:layout_height="369dp"
+        android:layout_width="392dp"
+        android:layout_height="687dp"
+        android:background="@drawable/rounded_container"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072">
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Ma maison :"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/idHouse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Identifiant maison :" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choisir un utilisateur" />
-
-        <Spinner
-            android:id="@+id/lstUsers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@android:layout/simple_spinner_item" />
-
-
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="addGuest"
-            android:text="Ajouter cet invité" />
-
-        <Button
-            android:id="@+id/delButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="deleteGuest"
-            android:text="Supprimer cet invité" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="393dp"
-        android:layout_height="305dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:layout_editor_absoluteX="-3dp">
+        app:layout_constraintVertical_bias="0.5">
 
         <TextView
             android:id="@+id/textView9"
@@ -80,17 +26,28 @@
             android:layout_marginBottom="20dp"
             android:text="Maison(s) où vous avez l'accès :"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="#130c4d"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lstHouses"
-            android:layout_width="wrap_content"
-            android:layout_height="260dp"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="517dp"
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp" />
 
-        </ListView>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#130c4d"
+            android:onClick="switchUser"
+            android:padding="10dp"
+            android:text="Changer de compte"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

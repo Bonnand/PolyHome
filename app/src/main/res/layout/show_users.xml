@@ -1,0 +1,51 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/rounded_card"
+    android:elevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:padding="8dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userLogo"
+            android:layout_width="40dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_logo" />
+
+        <TextView
+            android:id="@+id/textUserLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/userLogo"
+            android:text="81"
+            android:textColor="#130c4d"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textUserRole"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="58dp"
+            android:text="Propriétaire"
+            android:textAlignment="center"
+            android:textColor="#130c4d"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</FrameLayout>
