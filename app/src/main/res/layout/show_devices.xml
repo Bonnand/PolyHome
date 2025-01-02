@@ -9,7 +9,7 @@
         android:id="@+id/textDeviceId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,39 @@
         android:id="@+id/textDeviceState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="10dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDeviceId" />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="63dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:text="S"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="63dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:text="C"
+        app:layout_constraintEnd_toStartOf="@+id/buttonStop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonOpen"
+        android:layout_width="63dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:text="O"
+        app:layout_constraintEnd_toStartOf="@+id/buttonClose"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#FF0000" />
 </androidx.constraintlayout.widget.ConstraintLayout>

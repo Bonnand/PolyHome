@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.adrien_bonnand.polyhome.Api
+import com.adrien_bonnand.polyhome.CommandData
 import com.adrien_bonnand.polyhome.R
 
 class DevicesListActivity : AppCompatActivity() {
@@ -56,45 +58,5 @@ class DevicesListActivity : AppCompatActivity() {
         listView.adapter = devicesAdapter
     }
 
-    class DeviceAdapter(
-        private val context: Context,
-        private val dataSource: ArrayList<Device>
 
-    ) : BaseAdapter() {
-
-        private val inflater: LayoutInflater =
-            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getItem(position: Int): Device {
-            return dataSource[position]
-        }
-
-        override fun getCount(): Int {
-            return dataSource.size
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rowView = inflater.inflate(R.layout.show_devices, parent, false)
-            val device = getItem(position)
-            val deviceIdText = rowView.findViewById<TextView>(R.id.textDeviceId)
-            val deviceStateText = rowView.findViewById<TextView>(R.id.textDeviceState)
-
-            deviceIdText.text = device.id
-
-            if (device.type == "light") {
-                deviceStateText.text = if (device.power == 1) "Allumé" else "Éteint"
-            } else {
-                deviceStateText.text = if (device.opening == 1) "Fermé" else "Ouvert"
-            }
-
-
-
-
-            return rowView
-        }
-    }
 }

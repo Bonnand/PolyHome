@@ -16,11 +16,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
-
     public fun registerNewAccount(view: View)
     {
         val intent = Intent(this, RegisterActivity::class.java);
         startActivity(intent);
+
+
+
     }
 
     public fun auth(view: View){
