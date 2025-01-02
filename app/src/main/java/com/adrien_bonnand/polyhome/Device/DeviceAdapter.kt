@@ -14,7 +14,9 @@ import com.adrien_bonnand.polyhome.R
 
 class DeviceAdapter(
     private val context: Context,
-    private val dataSource: ArrayList<Device>
+    private val dataSource: ArrayList<Device>,
+    private val houseId: String?,
+    private val token: String?
 
 ) : BaseAdapter() {
 
@@ -75,7 +77,7 @@ class DeviceAdapter(
             } else if (device.openingMode == 2) {
                 deviceStateText.text = "Entrouvert"
             } else {
-            deviceStateText.text = "État inconnu" // Pour le cas où openingMode serait une valeur inattendue
+            deviceStateText.text = "État inconnu"
             }
 
             buttonOpen.setOnClickListener {
@@ -93,25 +95,13 @@ class DeviceAdapter(
         return rowView
     }
 
-    public fun testSucess(responseCode: Int)
-    {
-
-    }
 
     public fun commandDeviceSuccess(responseCode: Int) {
 
     }
 
-    private fun test()
-    {
-        val commandData = CommandData("");
-        Api().post<CommandData>("https://polyhome.lesmoulinsdudev.com/",commandData,::testSucess)
-    }
-
     private fun sendDeviceCommand(deviceId: String, command: String) {
 
-        val houseId = 81 //à supprimer ensuite
-        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMzU4OTZ9.gO66kzH_4wPfoHlP-102UBFC8KSqcrrPM787YA6wR4Y"
         val commandData = CommandData(command=command)
         Api().post<CommandData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",commandData,::commandDeviceSuccess,token)
         if (command == "STOP") {
@@ -128,10 +118,5 @@ class DeviceAdapter(
                 (context as? DevicesListActivity)?.loadDevices()
             }, 8000)
         }
-
-
-
-
     }
-
 }
