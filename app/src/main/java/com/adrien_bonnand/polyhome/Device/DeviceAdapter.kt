@@ -1,6 +1,7 @@
 package com.adrien_bonnand.polyhome.Device
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,24 +46,50 @@ class DeviceAdapter(
 
         deviceIdText.text = device.id
 
-        if (device.type == "light") {
-            deviceStateText.text = if (device.power == 1) "Allumé" else "Éteint"
+        if (device.id.startsWith("Light")) {
+            buttonOpen.text = "ON"
+            buttonClose.text = "OFF"
+            buttonStop.visibility = View.GONE
+
+            deviceStateText.text = if (device.power == 1) "Allumée" else "Éteinte"
+
+            buttonOpen.setOnClickListener {
+                sendDeviceCommand(device.id, "TURN ON")
+            }
+
+            buttonClose.setOnClickListener {
+                sendDeviceCommand(device.id, "TURN OFF")
+            }
         } else {
-            deviceStateText.text = if (device.opening == 1) "Ouvert" else "Fermé"
-        }
+            buttonOpen.text = "OUVRIR"
+            buttonClose.text = "FERMER"
+            buttonStop.visibility = View.VISIBLE
+            buttonStop.text = "STOP"
 
-        buttonOpen.setOnClickListener {
-            sendDeviceCommand(device.id, "OPEN")
-        }
+            Log.d("DeviceState", "openingMode: ${device.openingMode}")
 
-        buttonClose.setOnClickListener {
-            sendDeviceCommand(device.id, "CLOSE")
-        }
+            if (device.openingMode == 0) {
+                deviceStateText.text = "Ouvert"
+            } else if (device.openingMode == 1) {
+                deviceStateText.text = "Fermé"
+            } else if (device.openingMode == 2) {
+                deviceStateText.text = "Entrouvert"
+            } else {
+            deviceStateText.text = "État inconnu" // Pour le cas où openingMode serait une valeur inattendue
+            }
 
-        buttonStop.setOnClickListener {
-            sendDeviceCommand(device.id, "STOP")
-        }
+            buttonOpen.setOnClickListener {
+                sendDeviceCommand(device.id, "OPEN")
+            }
 
+            buttonClose.setOnClickListener {
+                sendDeviceCommand(device.id, "CLOSE")
+            }
+
+            buttonStop.setOnClickListener {
+                sendDeviceCommand(device.id, "STOP")
+            }
+        }
         return rowView
     }
 
@@ -87,9 +114,24 @@ class DeviceAdapter(
         val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMzU4OTZ9.gO66kzH_4wPfoHlP-102UBFC8KSqcrrPM787YA6wR4Y"
         val commandData = CommandData(command=command)
         Api().post<CommandData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",commandData,::commandDeviceSuccess,token)
-        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-            (context as? DevicesListActivity)?.loadDevices()
-        }, 10000)
+        if (command == "STOP") {
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                (context as? DevicesListActivity)?.loadDevices()
+            }, 400)
+        }
+        if (deviceId.startsWith("Light")) {
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                (context as? DevicesListActivity)?.loadDevices()
+            }, 400)
+        } else {
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                (context as? DevicesListActivity)?.loadDevices()
+            }, 8000)
+        }
+
+
+
+
     }
 
 }
