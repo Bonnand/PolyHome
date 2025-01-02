@@ -15,16 +15,19 @@
         android:theme="@style/Theme.PolyHome"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HousesListActivity"
+            android:name=".House.HouseInterfaceActivity"
             android:exported="false" />
         <activity
             android:name=".Device.DevicesListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".House.HousesListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
