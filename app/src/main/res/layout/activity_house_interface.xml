@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ADD8E6"
+    tools:context=".House.HouseInterfaceActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp"
+        android:background="#ADD8E6">
+
+        <TextView
+            android:id="@+id/houseNumber"
+            android:layout_width="412dp"
+            android:layout_height="72dp"
+            android:background="#130C4D"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Maison numéro :"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="373dp"
+            android:layout_height="377dp"
+            android:layout_marginTop="88dp"
+            android:background="@drawable/rounded_container"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Liste des utilisateurs de la maison"
+                android:textAlignment="center"
+                android:textColor="#130c4d"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/usersList"
+                android:layout_width="wrap_content"
+                android:layout_height="298dp"
+                android:layout_marginTop="10dp"
+                android:dividerHeight="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="380dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <Button
+                android:id="@+id/houseControlBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#130c4d"
+                android:onClick="controlHouse"
+                android:text="Controler la maison"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/leaveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#130c4d"
+                android:onClick="switchHouse"
+                android:text="Changer de maison"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="374dp"
+            android:layout_height="255dp"
+            android:background="@drawable/rounded_container"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintVertical_bias="0.576">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choisir un utilisateur"
+                android:textColor="#130c4d"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/existingUsersList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:listitem="@android:layout/simple_spinner_item" />
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="333dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#130c4d"
+                android:onClick="addGuest"
+                android:text="Ajouter cet utilisateur"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="333dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#130c4d"
+                android:onClick="deleteGuest"
+                android:text="Supprimer cet utilisateur"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
