@@ -43,7 +43,6 @@ class HouseAdapter(
             ownerText.text = "Membre"
         }
 
-
         return rowView
     }
 }

@@ -18,16 +18,16 @@ import com.adrien_bonnand.polyhome.R
 class DevicesListActivity : AppCompatActivity() {
     private val devices = ArrayList<Device>()
     private lateinit var devicesAdapter: DeviceAdapter
-    //private var token: String? = null
-    //private var houseId: String? = null
+    private var token: String? = null
+    private var houseId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_devices_list)
 
-        //token=intent.getStringExtra("token")
-        //houseId=intent.getStringExtra("houseId")
+        token=intent.getStringExtra("token")
+        houseId=intent.getStringExtra("houseId")
 
         initDevicesListView()
         loadDevices()
@@ -39,8 +39,6 @@ class DevicesListActivity : AppCompatActivity() {
     }
 
     public fun loadDevices() {
-        val houseId = 81 //à supprimer ensuite
-        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMzU4OTZ9.gO66kzH_4wPfoHlP-102UBFC8KSqcrrPM787YA6wR4Y"
         Api().get<Devices>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices", ::loadDevicesSuccess,token)
     }
 
@@ -54,9 +52,7 @@ class DevicesListActivity : AppCompatActivity() {
 
     private fun initDevicesListView() {
         val listView = findViewById<ListView>(R.id.lstDevices)
-        devicesAdapter = DeviceAdapter(this, devices)
+        devicesAdapter = DeviceAdapter(this, devices, houseId, token)
         listView.adapter = devicesAdapter
     }
-
-
 }

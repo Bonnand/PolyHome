@@ -184,6 +184,7 @@ class HouseInterfaceActivity : AppCompatActivity() {
         )
 
         intentLeave.putExtra("token", token)
+        intentLeave.putExtra("houseId", selectedHouse)
         startActivity(intentLeave);
     }
 }
