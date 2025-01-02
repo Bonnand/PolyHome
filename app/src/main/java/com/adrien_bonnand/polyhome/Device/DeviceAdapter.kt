@@ -85,9 +85,11 @@ class DeviceAdapter(
 
         val houseId = 81 //à supprimer ensuite
         val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgxLCJpYXQiOjE3MzMxMzU4OTZ9.gO66kzH_4wPfoHlP-102UBFC8KSqcrrPM787YA6wR4Y"
-
         val commandData = CommandData(command=command)
-
         Api().post<CommandData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",commandData,::commandDeviceSuccess,token)
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            (context as? DevicesListActivity)?.loadDevices()
+        }, 10000)
     }
+
 }
