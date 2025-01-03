@@ -46,9 +46,13 @@ class DeviceAdapter(
         val buttonClose = rowView.findViewById<Button>(R.id.buttonClose)
         val buttonStop = rowView.findViewById<Button>(R.id.buttonStop)
 
-        deviceIdText.text = device.id
+
+        //deviceIdText.text = device.id
 
         if (device.id.startsWith("Light")) {
+
+            deviceIdText.text = device.id.replace("Light", "Lumière")
+
             buttonOpen.text = "ON"
             buttonClose.text = "OFF"
             buttonStop.visibility = View.GONE
@@ -63,6 +67,12 @@ class DeviceAdapter(
                 sendDeviceCommand(device.id, "TURN OFF")
             }
         } else {
+            if (device.id.startsWith("Shutter")) {
+                deviceIdText.text = device.id.replace("Shutter", "Volet")
+            } else {
+                deviceIdText.text = device.id.replace("GarageDoor", "Porte de Garage")
+
+            }
             buttonOpen.text = "OUVRIR"
             buttonClose.text = "FERMER"
             buttonStop.visibility = View.VISIBLE
