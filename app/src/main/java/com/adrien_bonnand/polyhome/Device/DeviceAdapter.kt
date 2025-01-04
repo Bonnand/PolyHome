@@ -1,22 +1,17 @@
 package com.adrien_bonnand.polyhome.Device
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
-import com.adrien_bonnand.polyhome.Api
-import com.adrien_bonnand.polyhome.CommandData
 import com.adrien_bonnand.polyhome.R
 
 class DeviceAdapter(
     private val context: Context,
-    private val dataSource: ArrayList<Device>,
-    private val houseId: String?,
-    private val token: String?
+    private val dataSource: ArrayList<Device>
 
 ) : BaseAdapter() {
 
@@ -46,29 +41,35 @@ class DeviceAdapter(
         val buttonClose = rowView.findViewById<Button>(R.id.buttonClose)
         val buttonStop = rowView.findViewById<Button>(R.id.buttonStop)
 
-        deviceIdText.text = device.id
 
         if (device.id.startsWith("Light")) {
-            buttonOpen.text = "ON"
-            buttonClose.text = "OFF"
+
+            deviceIdText.text = device.id.replace("Light", "Lumière")
+
+            buttonOpen.text = "I"
+            buttonClose.text = "O"
             buttonStop.visibility = View.GONE
 
             deviceStateText.text = if (device.power == 1) "Allumée" else "Éteinte"
 
             buttonOpen.setOnClickListener {
-                sendDeviceCommand(device.id, "TURN ON")
+                (context as? DevicesListActivity)?.sendDeviceCommand(device.id, "TURN ON")
             }
 
             buttonClose.setOnClickListener {
-                sendDeviceCommand(device.id, "TURN OFF")
+                (context as? DevicesListActivity)?.sendDeviceCommand(device.id, "TURN OFF")
             }
         } else {
-            buttonOpen.text = "OUVRIR"
-            buttonClose.text = "FERMER"
-            buttonStop.visibility = View.VISIBLE
-            buttonStop.text = "STOP"
+            if (device.id.startsWith("Shutter")) {
+                deviceIdText.text = device.id.replace("Shutter", "Volet")
+            } else {
+                deviceIdText.text = device.id.replace("GarageDoor", "Garage")
 
-            Log.d("DeviceState", "openingMode: ${device.openingMode}")
+            }
+            buttonOpen.text = "▲"
+            buttonClose.text = "▼"
+            buttonStop.visibility = View.VISIBLE
+            buttonStop.text = "■"
 
             if (device.openingMode == 0) {
                 deviceStateText.text = "Ouvert"
@@ -81,42 +82,18 @@ class DeviceAdapter(
             }
 
             buttonOpen.setOnClickListener {
-                sendDeviceCommand(device.id, "OPEN")
+                (context as? DevicesListActivity)?.sendDeviceCommand(device.id, "OPEN")
             }
 
             buttonClose.setOnClickListener {
-                sendDeviceCommand(device.id, "CLOSE")
+                (context as? DevicesListActivity)?.sendDeviceCommand(device.id, "CLOSE")
             }
 
             buttonStop.setOnClickListener {
-                sendDeviceCommand(device.id, "STOP")
+                (context as? DevicesListActivity)?.sendDeviceCommand(device.id, "STOP")
             }
         }
         return rowView
     }
 
-
-    public fun commandDeviceSuccess(responseCode: Int) {
-
-    }
-
-    private fun sendDeviceCommand(deviceId: String, command: String) {
-
-        val commandData = CommandData(command=command)
-        Api().post<CommandData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",commandData,::commandDeviceSuccess,token)
-        if (command == "STOP") {
-            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                (context as? DevicesListActivity)?.loadDevices()
-            }, 400)
-        }
-        if (deviceId.startsWith("Light")) {
-            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                (context as? DevicesListActivity)?.loadDevices()
-            }, 400)
-        } else {
-            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                (context as? DevicesListActivity)?.loadDevices()
-            }, 8000)
-        }
-    }
 }
