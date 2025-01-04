@@ -12,15 +12,18 @@ import com.adrien_bonnand.polyhome.Login.LoginActivity
 import com.adrien_bonnand.polyhome.R
 
 class HousesListActivity : AppCompatActivity() {
-    private val houses: ArrayList<House> = ArrayList()
+    private val houses: ArrayList<House> = ArrayList() // List of the houses where the user has access to
     private lateinit var housesAdapter: HouseAdapter
     private var token: String? = null
+    private var houseOwnerNumber: String? = null // ID number of the owner house
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_houses_list)
         token=intent.getStringExtra("token")
+        houseOwnerNumber=intent.getStringExtra("houseOwnerNumber")
         initHousesListView()
         loadHouses()
     }
@@ -30,11 +33,11 @@ class HousesListActivity : AppCompatActivity() {
         loadHouses()
     }
 
-    public fun loadHouses() {
+    private fun loadHouses() {
         Api().get<ArrayList<House>>("https://polyhome.lesmoulinsdudev.com/api/houses", ::loadHousesSuccess,token)
     }
 
-    public fun loadHousesSuccess(responseCode: Int, loadedHouses: ArrayList<House>?) {
+    private fun loadHousesSuccess(responseCode: Int, loadedHouses: ArrayList<House>?) {
         if (responseCode == 200 && loadedHouses != null) {
             houses.clear()
             houses.addAll(loadedHouses)
@@ -60,6 +63,7 @@ class HousesListActivity : AppCompatActivity() {
 
                 intentLeave.putExtra("token",token)
                 intentLeave.putExtra("selectedHouse",houseSelected.houseId.toString())
+                intentLeave.putExtra("houseOwnerNumber",houseOwnerNumber) // Permit to save houseOwnerNumber
 
                 startActivity(intentLeave);
 

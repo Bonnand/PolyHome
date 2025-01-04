@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,15 +10,17 @@
 
     <TextView
         android:id="@+id/banner"
-        android:layout_width="412dp"
-        android:layout_height="72dp"
+        android:layout_width="415dp"
+        android:layout_height="90dp"
         android:background="#130C4D"
         android:gravity="center"
         android:padding="20dp"
         android:text="Bienvenue sur PolyHome"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -51,10 +54,9 @@
             android:autofillHints="username"
             android:background="@drawable/rounded_edit_text"
             android:ems="10"
-            android:hint="Login"
+            android:hint="Pseudo"
             android:inputType="text"
-            android:padding="10dp"
-            android:text="yes" />
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/passwordEntry"
@@ -66,9 +68,7 @@
             android:ems="10"
             android:hint="Mot de passe"
             android:inputType="textPassword"
-            android:padding="10dp"
-            android:text="yes" />
-
+            android:padding="10dp"/>
 
         <Button
             android:id="@+id/connectBtn"

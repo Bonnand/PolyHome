@@ -22,36 +22,34 @@ import com.adrien_bonnand.polyhome.R
 import com.adrien_bonnand.polyhome.User.UserAdapter
 
 class HouseInterfaceActivity : AppCompatActivity() {
-    private val houseUsers: ArrayList<HouseUserData> = ArrayList()
-    private val existingUsers: ArrayList<String> = ArrayList()
+    private val houseUsers: ArrayList<HouseUserData> = ArrayList() // List of users of a house
+    private val existingUsers: ArrayList<String> = ArrayList() // List of existing users
     private lateinit var userAdapter: UserAdapter
     private var token: String? = null
-    private var selectedHouse: String? = null
-    private var selectedUser: String = "null"
-
-
+    private var selectedHouse: String? = null // Selected house in HousesListActivity (=houseOwnerNumber initially)
+    private var selectedUser: String = "null" // Selected user in the spinner
+    private var houseOwnerNumber: String? = null // ID number of the owner house
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_house_interface)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         token=intent.getStringExtra("token")
         selectedHouse=intent.getStringExtra("selectedHouse")
+        houseOwnerNumber=intent.getStringExtra("houseOwnerNumber")
+
         val txt = findViewById<TextView>(R.id.houseNumber);
         txt.text=selectedHouse
+
         val linearLayout2 = findViewById<LinearLayout>(R.id.linearLayout2)
-        if (selectedHouse == "81") {
+        if (selectedHouse == houseOwnerNumber) { // Permit to add/delete guest only if it's his own house
             linearLayout2.visibility = View.VISIBLE
             loadExistingUsers()
         }
+
         initUsersListView()
         loadUsers()
-
     }
 
     private fun initUsersListView() {
@@ -60,19 +58,19 @@ class HouseInterfaceActivity : AppCompatActivity() {
         listView.adapter = userAdapter
     }
 
-    public fun loadUsers() {
+    private fun loadUsers() {
         Api().get<ArrayList<HouseUserData>>("https://polyhome.lesmoulinsdudev.com/api/houses/$selectedHouse/users", ::loadUsersSuccess,token)
     }
 
-    public fun loadUsersSuccess(responseCode: Int, loadedUsers: ArrayList<HouseUserData>?) {
+    private fun loadUsersSuccess(responseCode: Int, loadedUsers: ArrayList<HouseUserData>?) {
         if (responseCode == 200 && loadedUsers != null) {
             houseUsers.clear()
             houseUsers.addAll(loadedUsers)
             runOnUiThread {
                 userAdapter.notifyDataSetChanged()
                 val houseNumber = findViewById<TextView>(R.id.houseNumber)
-                if(selectedHouse=="81") {
-                    houseNumber.text = "Ma maison (Id=$selectedHouse)"
+                if(selectedHouse==houseOwnerNumber) { // Permit to differentiate your home from others
+                    houseNumber.text = "Ma maison ($selectedHouse)"
                 }
                 else{
                     houseNumber.text = "Maison numéro : $selectedHouse"
@@ -81,11 +79,11 @@ class HouseInterfaceActivity : AppCompatActivity() {
         }
     }
 
-    public fun loadExistingUsers() {
+    private fun loadExistingUsers() {
         Api().get<ArrayList<ExistingUserData>>("https://polyhome.lesmoulinsdudev.com/api/users", ::loadExistingUsersSuccess)
     }
 
-    public fun loadExistingUsersSuccess(responseCode: Int, loadedUsers: ArrayList<ExistingUserData>?) {
+    private fun loadExistingUsersSuccess(responseCode: Int, loadedUsers: ArrayList<ExistingUserData>?) {
         if (responseCode == 200 && loadedUsers!=null) {
             existingUsers.clear()
             existingUsers.addAll(loadedUsers.map { it.login })
@@ -114,14 +112,14 @@ class HouseInterfaceActivity : AppCompatActivity() {
     {
         val guestData = GuestData(userLogin=selectedUser);
 
-        Api().post<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::addGuestSuccess ,token)
+        Api().post<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseOwnerNumber/users",guestData, ::addGuestSuccess ,token)
     }
 
-    public fun deleteGuest(view: View)
+    fun deleteGuest(view: View)
     {
         val guestData = GuestData(userLogin=selectedUser);
 
-        Api().delete<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/81/users",guestData, ::deleteGuestSuccess ,token)
+        Api().delete<GuestData>("https://polyhome.lesmoulinsdudev.com/api/houses/$houseOwnerNumber/users",guestData, ::deleteGuestSuccess ,token)
     }
 
     private fun addGuestSuccess (responseCode : Int) {
@@ -174,6 +172,7 @@ class HouseInterfaceActivity : AppCompatActivity() {
         )
 
         intentLeave.putExtra("token", token)
+        intentLeave.putExtra("houseOwnerNumber", houseOwnerNumber) // Permit to save houseOwnerNumber
         startActivity(intentLeave);
     }
 

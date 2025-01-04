@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         finish();
     }
 
-    fun register(view: View){
+    public fun register(view: View){
 
         val loginText = findViewById<EditText>(R.id.registerLoginEntry);
         val passwordText = findViewById<EditText>(R.id.registerPasswordEntry);
@@ -38,22 +38,22 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         else if(responseCode==400){
-            val registerMessage = findViewById<TextView>(R.id.registerMessage);
-                runOnUiThread {
-                    registerMessage.text="Les données fournies sont incorrectes"
-                }
+        val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            runOnUiThread {
+                registerMessage.text="Les données fournies sont incorrectes"
+            }
         }
         else if(responseCode==409){
-            val registerMessage = findViewById<TextView>(R.id.registerMessage);
-                runOnUiThread {
-                    registerMessage.text="Le login est déjà utilisé par un autre compte"
-                }
+        val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            runOnUiThread {
+                registerMessage.text="Le login est déjà utilisé par un autre compte"
+            }
         }
         else if(responseCode==500){
-            val registerMessage = findViewById<TextView>(R.id.registerMessage);
-                runOnUiThread {
-                    registerMessage.text="Une erreur s’est produite au niveau du serveur"
-                }
+        val registerMessage = findViewById<TextView>(R.id.registerMessage);
+            runOnUiThread {
+                registerMessage.text="Une erreur s’est produite au niveau du serveur"
+            }
         }
     }
 }
