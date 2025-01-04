@@ -1,29 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+    android:layout_height="match_parent"
+    android:background="#ADD8E6">
 
         <TextView
             android:id="@+id/textView7"
+            android:layout_width="412dp"
+            android:layout_height="72dp"
+            android:background="#130C4D"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Contrôle des équipements"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="392dp"
+        android:layout_height="450dp"
+        android:background="@drawable/rounded_container"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.05">
+
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Liste des Equipements :"
+            android:text="Liste des équipements :"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="#130c4d"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lstDevices"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="400dp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Autres Commandes :"
+        android:textAlignment="center"
+        android:textColor="#130c4d"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        tools:ignore="DuplicateIds"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <Button
+        android:id="@+id/buttonGroupCommands"
+        android:layout_width="336dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#130c4d"
+        android:onClick="groupCommand"
+        android:text="Commande Groupée"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonTimeCommands"
+        android:layout_width="336dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#130c4d"
+        android:onClick="groupCommand"
+        android:text="Commande Horaire"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonGroupCommands"
+        tools:igore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="336dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#130c4d"
+        android:onClick="groupCommand"
+        android:text="Retour au choix des maisons"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTimeCommands"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

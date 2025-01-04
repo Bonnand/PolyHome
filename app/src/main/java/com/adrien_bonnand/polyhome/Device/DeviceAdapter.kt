@@ -53,8 +53,8 @@ class DeviceAdapter(
 
             deviceIdText.text = device.id.replace("Light", "Lumière")
 
-            buttonOpen.text = "ON"
-            buttonClose.text = "OFF"
+            buttonOpen.text = "I"
+            buttonClose.text = "O"
             buttonStop.visibility = View.GONE
 
             deviceStateText.text = if (device.power == 1) "Allumée" else "Éteinte"
@@ -70,13 +70,13 @@ class DeviceAdapter(
             if (device.id.startsWith("Shutter")) {
                 deviceIdText.text = device.id.replace("Shutter", "Volet")
             } else {
-                deviceIdText.text = device.id.replace("GarageDoor", "Porte de Garage")
+                deviceIdText.text = device.id.replace("GarageDoor", "Garage")
 
             }
-            buttonOpen.text = "OUVRIR"
-            buttonClose.text = "FERMER"
+            buttonOpen.text = "▲"
+            buttonClose.text = "▼"
             buttonStop.visibility = View.VISIBLE
-            buttonStop.text = "STOP"
+            buttonStop.text = "■"
 
             Log.d("DeviceState", "openingMode: ${device.openingMode}")
 
