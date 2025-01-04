@@ -35,9 +35,9 @@ class HouseAdapter(
         val houseText = rowView.findViewById<TextView>(R.id.textUserLogin)
         val ownerText = rowView.findViewById<TextView>(R.id.textUserRole)
 
-        houseText.text = house.houseId.toString()
+        houseText.text = "Id: ${house.houseId}"
 
-        if (house.owner == true) {
+        if (house.owner == true) { // Permit to show the user role
             ownerText.text = "Propriétaire"
         } else {
             ownerText.text = "Membre"

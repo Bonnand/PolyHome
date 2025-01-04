@@ -28,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="18dp"
             android:layout_toEndOf="@id/listImage"
             android:text="81"
             android:textColor="#130c4d"
@@ -37,17 +37,17 @@
 
         <TextView
             android:id="@+id/textUserRole"
-            android:layout_width="149dp"
+            android:layout_width="172dp"
             android:layout_height="24dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="81dp"
             android:layout_marginTop="21dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/textUserLogin"
             android:text="Propriétaire"
             android:textAlignment="center"
             android:textColor="#130c4d"
             android:textSize="16sp" />
     </RelativeLayout>
-    </FrameLayout>
+</FrameLayout>
