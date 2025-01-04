@@ -63,14 +63,19 @@ class DevicesListActivity : AppCompatActivity() {
     }
 
     public fun sendCommand(view: View){
+
+        runOnUiThread {
+            Toast.makeText(this, "Commande Envoyée", Toast.LENGTH_SHORT).show()
+        }
+
         val spinnerCommand = findViewById<Spinner>(R.id.spinnerCommand)
         val spinnerHour = findViewById<Spinner>(R.id.spinnerHour)
         val spinnerMinute = findViewById<Spinner>(R.id.spinnerMinute)
 
 
         val command = spinnerCommand.selectedItem.toString()
-        val hour = spinnerHour.selectedItem.toString().toInt()
-        val minute = spinnerMinute.selectedItem.toString().toInt()
+        val hour = spinnerHour.selectedItem.toString()
+        val minute = spinnerMinute.selectedItem.toString()
 
         val deviceFilter: String
         val deviceCommand: String
@@ -89,34 +94,34 @@ class DevicesListActivity : AppCompatActivity() {
             deviceCommand = "TURN OFF"
         }
 
-        if (hour == 0 && minute == 0){
+        if (hour == "HH" && minute == "MM"){
             for (device in devices) {
                 if (device.id.contains(deviceFilter)) {
                     sendDeviceCommand(device.id, deviceCommand)
                 }
             }
-        }
-
-        val currentTime = System.currentTimeMillis()
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        calendar.set(Calendar.SECOND, 0)
-        val targetTime = calendar.timeInMillis
-
-        val delayTime = if (targetTime > currentTime) {
-            targetTime - currentTime
         } else {
-            targetTime + 24 * 60 * 60 * 1000 - currentTime
-        }
+            val currentTime = System.currentTimeMillis()
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, hour.toInt())
+            calendar.set(Calendar.MINUTE, minute.toInt())
+            calendar.set(Calendar.SECOND, 0)
+            val targetTime = calendar.timeInMillis
 
-        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-            for (device in devices) {
-                if (device.id.contains(deviceFilter)) {
-                    sendDeviceCommand(device.id, deviceCommand)
-                }
+            val delayTime = if (targetTime > currentTime) {
+                targetTime - currentTime
+            } else {
+                targetTime + 24 * 60 * 60 * 1000 - currentTime
             }
-        }, delayTime)
+
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                for (device in devices) {
+                    if (device.id.contains(deviceFilter)) {
+                        sendDeviceCommand(device.id, deviceCommand)
+                    }
+                }
+            }, delayTime)
+        }
     }
 
     public fun commandDeviceSuccess(responseCode: Int) {
