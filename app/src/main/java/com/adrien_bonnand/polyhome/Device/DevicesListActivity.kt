@@ -31,7 +31,6 @@ class DevicesListActivity : AppCompatActivity() {
         loadDevices()
         }
 
-
     override fun onResume() {
         super.onResume()
         loadDevices()
@@ -80,10 +79,10 @@ class DevicesListActivity : AppCompatActivity() {
         val deviceFilter: String
         val deviceCommand: String
 
-        if (command == "Fermer tout les volets") {
+        if (command == "Fermer tous les volets") {
             deviceFilter = "Shutter"
             deviceCommand = "CLOSE"
-        } else if (command == "Ouvrir tout les volets") {
+        } else if (command == "Ouvrir tous les volets") {
             deviceFilter = "Shutter"
             deviceCommand = "OPEN"
         } else if (command == "Allumer toutes les lumières") {
